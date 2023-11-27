@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
     if (University_Name) {
       const universityInfo = await info.findOne({
         attributes: ['University_Name', 'GPA', 'Admissions_Rate', 'tution_in_state', 'tution_out_state', 'popular_major'],
-        where: { University_Name,popular_major }
+        where: { University_Name}
 
       });
 
@@ -29,7 +29,7 @@ router.get('/', async (req, res) => {
         where: { popular_major }
       });
 
-      if (!universitiesWithMajor || universitiesWithMajor.length === 0) {
+      if (!universitiesWithMajor) {
         return res.status(404).json({ message: 'No university found with the specified major' });
       }
 
