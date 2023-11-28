@@ -44,6 +44,7 @@ module.exports = db.define(
   {
     tableName: "user",
     timestamps: true,
+    freezeTableName: true,
     hooks: {
       async beforeCreate(user) {
         user.password = await argon2.hash(user.password);
