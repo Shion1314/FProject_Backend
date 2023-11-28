@@ -1,8 +1,10 @@
 const { Sequelize } = require("sequelize");
 
-const { database } = require("../database.json");
+const config = require("../database.json");
 
-module.exports = new Sequelize(database.name, database.username, database.password, {
-  host: database.host,
-  dialect: database.dialect,
+const { name, username, password, host, dialect } = config[process.env.NODE_ENV || "development"];
+
+module.exports = new Sequelize(name, username, password, {
+  host,
+  dialect,
 });

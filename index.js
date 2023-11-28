@@ -1,20 +1,26 @@
 const db = require("./Database/Connect");
 
 const express = require("express");
-
-const path = require("path");
+const session = require("express-session");
 
 const port = 3001;
 
 const app = express();
 
-app.get("/", (req, res) => res.send("Hello World!"));
+const SESSION_SECRET = "secret"; // TODO: Don't hardcode
 
-app.listen(port, console.log(`Server running on ${port}`));
 app.use(express.json());
+app.use(
+  session({
+    secret: SESSION_SECRET,
+    saveUninitialized: false,
+    resave: false,
+  })
+);
 
+app.use("/auth", require("./Route/auth"));
 app.use("/university", require("./Route/university"));
 
-db.authenticate()
-  .then(() => console.log("Database connected"))
-  .catch((err) => console.log("Error: " + err));
+db.authenticate().then(() => {
+  app.listen(port, () => console.log(`Server running on ${port}`));
+});

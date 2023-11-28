@@ -9,12 +9,15 @@ const capitalizeFirstLetter = (name) => {
   return trimmed[0].toUpperCase() + trimmed.slice(1).toLowerCase();
 };
 
-module.exports = db.define(
+const User = db.define(
   "User",
   {
     email: {
       type: sequelize.STRING,
       allowNull: false,
+      set(value) {
+        this.setDataValue("email", value.trim());
+      },
     },
     firstName: {
       type: sequelize.STRING,
@@ -33,7 +36,7 @@ module.exports = db.define(
       type: sequelize.STRING,
       allowNull: false,
       set(value) {
-        this.setDataValue("lastName", normalizeName(value));
+        this.setDataValue("lastName", capitalizeFirstLetter(value));
       },
     },
     password: {
@@ -45,6 +48,7 @@ module.exports = db.define(
     tableName: "user",
     timestamps: true,
     freezeTableName: true,
+    paranoid: true,
     hooks: {
       async beforeCreate(user) {
         user.password = await argon2.hash(user.password);
@@ -57,3 +61,9 @@ module.exports = db.define(
     },
   }
 );
+
+User.prototype.validatePassword = function (plainTextPassword) {
+  return argon2.verify(this.password, plainTextPassword);
+};
+
+module.exports = User;
