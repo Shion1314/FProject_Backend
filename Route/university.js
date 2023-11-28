@@ -101,6 +101,8 @@ router.post('/', (async(req, res) => {
 
 //PUT
 router.put('/:id', (async(req, res) => {
+    
+    
     await info.update(req.body, {
       where: {
         id: req.params.id
