@@ -1,27 +1,20 @@
-const db=require('./Database/Connect');
+const db = require("./Database/Connect");
 
-const express =require('express');
+const express = require("express");
 
-const path = require('path');
-
-
+const path = require("path");
 
 const port = 3001;
 
+const app = express();
 
-const app=express();
+app.get("/", (req, res) => res.send("Hello World!"));
 
-app.get('/',(req,res)=> res.send('Hello World!'));
+app.listen(port, console.log(`Server running on ${port}`));
+app.use(express.json());
 
-app.listen(port,console.log(`Server running on ${port}`))
-app.use(express.json()); 
-
-
-
-app.use("/university",require("./Route/university"));
-
-
+app.use("/university", require("./Route/university"));
 
 db.authenticate()
-.then(()=> console.log("Database connected"))
-.catch(err=> console.log('Error: ' + err) )
+  .then(() => console.log("Database connected"))
+  .catch((err) => console.log("Error: " + err));
