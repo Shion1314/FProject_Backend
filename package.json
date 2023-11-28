@@ -4,14 +4,24 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "db:seed:all": "npx sequelize-cli db:seed:all",
+    "db:migrate:new": "sequelize migration:generate",
+    "db:migrate:up": "npx sequelize-cli db:migrate",
+    "db:migrate:undo": "npx sequelize-cli db:migrate:undo",
     "start": "node index.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "argon2": "^0.31.2",
     "body-parser": "^1.20.2",
     "express": "^4.18.2",
+    "express-session": "^1.17.3",
     "pg": "^8.11.3",
-    "sequelize": "^6.35.1"
+    "sequelize": "^6.35.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
   }
 }

@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "wqofikre",
+    "password": "kyYtauYn2RPEuOuatts1_-9JeDsszDkO",
+    "database": "wqofikre",
+    "host": "berry.db.elephantsql.com",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "wqofikre",
+    "password": "kyYtauYn2RPEuOuatts1_-9JeDsszDk",
+    "database": "wqofikre",
+    "host": "berry.db.elephantsql.com",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "wqofikre",
+    "password": "kyYtauYn2RPEuOuatts1_-9JeDsszDk",
+    "database": "wqofikre",
+    "host": "berry.db.elephantsql.com",
+    "dialect": "postgres"
+  }
+}
