@@ -2,15 +2,25 @@ const db = require("./Database/Connect");
 
 const express = require("express");
 const session = require("express-session");
-const cors = require('cors');
-const port = 3001;
+const cors = require("cors");
 
 const app = express();
 
-const SESSION_SECRET = "secret"; // TODO: Don't hardcode
-app.use(cors());
+// TODO: Don't hardcode
+const CORS_ORIGIN = "http://localhost:3000";
+const SESSION_SECRET = "secret";
+
+const PORT = 3001;
 
 app.use(express.json());
+
+app.use(
+  cors({
+    origin: CORS_ORIGIN,
+    credentials: true,
+  })
+);
+
 app.use(
   session({
     secret: SESSION_SECRET,
@@ -23,5 +33,5 @@ app.use("/auth", require("./Route/auth"));
 app.use("/university", require("./Route/university"));
 
 db.authenticate().then(() => {
-  app.listen(port, () => console.log(`Server running on ${port}`));
+  app.listen(PORT, () => console.log(`Server running on ${PORT}`));
 });
