@@ -3,21 +3,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("university", {
+    await queryInterface.createTable("university_table", {
       university_name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      sat_score_25th: {
+      avg_sat: {
         type: Sequelize.INTEGER,
       },
-      sat_score_75th: {
-        type: Sequelize.INTEGER,
-      },
-      act_score_25th: {
-        type: Sequelize.INTEGER,
-      },
-      act_score_75th: {
+      avg_act: {
         type: Sequelize.INTEGER,
       },
       gpa_avg: {
@@ -44,6 +38,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("university");
+    await queryInterface.dropTable("university_table");
   },
 };

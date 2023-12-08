@@ -26,10 +26,8 @@ router.get("/", async (req, res) => {
     const universityInfo = await info.findOne({
       attributes: [
         "university_name",
-        "sat_score_25th",
-        "sat_score_75th",
-        "act_score_25th",
-        "act_score_75th",
+        "avg_sat",
+        "avg_act",
         "gpa_avg",
         "admissions_rate",
         "tuition_instate_full",
@@ -37,7 +35,9 @@ router.get("/", async (req, res) => {
         "popular_major",
         "id",
       ],
-      where: { university_name },
+      where: { university_name: {
+        [Op.iLike]: `%${university_name.replace(/CUNY/i, '').trim()}%`, 
+      }},
     });
 
     if (!universityInfo) {
@@ -52,10 +52,8 @@ router.get("/", async (req, res) => {
     const SATscore = await info.findAll({
       attributes: [
         "university_name",
-        "sat_score_25th",
-        "sat_score_75th",
-        "act_score_25th",
-        "act_score_75th",
+        "avg_sat",
+        "avg_act",
         "gpa_avg",
         "admissions_rate",
         "tuition_instate_full",
@@ -81,10 +79,8 @@ router.get("/", async (req, res) => {
     const ACTscore = await info.findAll({
       attributes: [
         "university_name",
-        "sat_score_25th",
-        "sat_score_75th",
-        "act_score_25th",
-        "act_score_75th",
+        "avg_sat",
+        "avg_act",
         "gpa_avg",
         "admissions_rate",
         "tuition_instate_full",
@@ -110,10 +106,8 @@ router.get("/", async (req, res) => {
   const allUniversityInfo = await info.findAll({
     attributes: [
       "university_name",
-      "sat_score_25th",
-      "sat_score_75th",
-      "act_score_25th",
-      "act_score_75th",
+      "avg_sat",
+      "avg_act",
       "gpa_avg",
       "admissions_rate",
       "tuition_instate_full",
