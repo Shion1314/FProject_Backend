@@ -9,16 +9,10 @@ const University = db.define(
       type: sequelize.STRING,
       allowNull: false,
     },
-    sat_score_25th: {
+    avg_sat: {
       type: sequelize.INTEGER,
     },
-    sat_score_75th: {
-      type: sequelize.INTEGER,
-    },
-    act_score_25th: {
-      type: sequelize.INTEGER,
-    },
-    act_score_75th: {
+    avg_act: {
       type: sequelize.INTEGER,
     },
     gpa_avg: {
@@ -44,7 +38,7 @@ const University = db.define(
     },
   },
   {
-    tableName: "university",
+    tableName: "university_table",
     timestamps: false,
     freezeTableName: true,
   }
