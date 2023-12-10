@@ -66,10 +66,11 @@ router.get("/", async (req, res) => {
       gpa_avg: {
         [Op.lt]: parseFloat(gpa_avg, 10) + 0.10,
       },
+    
     };
   
     if (popular_major) {
-      whereClause.popular_major = popular_major;
+      whereClause.popular_major = {[Op.iLike]: `%${popular_major.trim()}%`};
     }
     if (tuition_instate_full) {
       whereClause.tuition_instate_full = {
