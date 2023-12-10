@@ -106,7 +106,9 @@ router.get("/", async (req, res) => {
       where: whereClause,
     });
 
- 
+    if (!SATscore) {
+      return res.status(404).json({ message: "No university found with the specified condition" });
+    }
 
     return res.json(SATscore);
   }
