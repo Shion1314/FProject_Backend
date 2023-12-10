@@ -63,26 +63,28 @@ router.get("/", async (req, res) => {
       avg_sat: {
         [Op.lt]: parseInt(avg_sat, 10) + 100,
       },
-      gpa_avg: {
-        [Op.lt]: parseFloat(gpa_avg, 10) + 0.10,
-      },
+  
     
     };
   
     if (popular_major) {
       whereClause.popular_major = {[Op.iLike]: `%${popular_major.trim()}%`};
-    }
+    };
     if (tuition_instate_full) {
       whereClause.tuition_instate_full = {
         [Op.lt]: parseInt(tuition_instate_full, 10) + 1000,
       };
-    }
+    };
   
     if (tuition_outstate_full) {
       whereClause.tuition_outstate_full = {
         [Op.lt]: parseInt(tuition_outstate_full, 10) + 1000,
       };
-    }
+    };
+    if(gpa_avg){
+      whereClause.gpa_avg ={[Op.lt]: parseFloat(gpa_avg, 10) + 0.10,
+      };
+    };
 
 
 
@@ -104,9 +106,7 @@ router.get("/", async (req, res) => {
       where: whereClause,
     });
 
-    if (!SATscore) {
-      return res.status(404).json({ message: "No university found with the specified condition" });
-    }
+ 
 
     return res.json(SATscore);
   }
