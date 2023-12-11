@@ -13,13 +13,13 @@ router.get("/:id", async (req, res) => {
 
 // Define a route to get university_info based on University_Name
 router.get("/", async (req, res) => {
-  const { university_name, avg_sat, avg_act, gpa_avg, tuition_instate_full, tuition_outstate_full, popular_major,sat_operator} = req.query;
-  const defaultSatOperator = "eq";
-  const validOperators = ["eq", "ne", "lt", "lte", "gt", "gte"];
+  const { university_name, avg_sat, avg_act, gpa_avg, tuition_instate_full, tuition_outstate_full, popular_major} = req.query;
+  // const defaultSatOperator = "eq";
+  // const validOperators = ["eq", "ne", "lt", "lte", "gt", "gte"];
 
-  const selectedSatOperator = validOperators.includes(sat_operator)
-    ? sat_operator
-    : defaultSatOperator;
+  // const selectedSatOperator = validOperators.includes(sat_operator)
+  //   ? sat_operator
+  //   : defaultSatOperator;
 
   // If University_Name parameter is provided, fetch specific university info
   if (university_name) {
