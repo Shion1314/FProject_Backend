@@ -13,13 +13,13 @@ router.get("/:id", async (req, res) => {
 
 // Define a route to get university_info based on University_Name
 router.get("/", async (req, res) => {
-  const { university_name, sat_score_25th, act_score_25th, sat_operator } = req.query;
-  const defaultSatOperator = "eq";
-  const validOperators = ["eq", "ne", "lt", "lte", "gt", "gte"];
+  const { university_name, avg_sat, avg_act, gpa_avg, tuition_instate_full, tuition_outstate_full, popular_major} = req.query;
+  // const defaultSatOperator = "eq";
+  // const validOperators = ["eq", "ne", "lt", "lte", "gt", "gte"];
 
-  const selectedSatOperator = validOperators.includes(sat_operator)
-    ? sat_operator
-    : defaultSatOperator;
+  // const selectedSatOperator = validOperators.includes(sat_operator)
+  //   ? sat_operator
+  //   : defaultSatOperator;
 
   // If University_Name parameter is provided, fetch specific university info
   if (university_name) {
@@ -35,9 +35,11 @@ router.get("/", async (req, res) => {
         "popular_major",
         "id",
       ],
-      where: { university_name: {
-        [Op.iLike]: `%${university_name.replace(/CUNY/i, '').trim()}%`, 
-      }},
+      where: {
+        university_name: {
+          [Op.iLike]: `%${university_name.trim()}%`,
+        }
+      },
     });
 
     if (!universityInfo) {
@@ -47,8 +49,48 @@ router.get("/", async (req, res) => {
     return res.json(universityInfo);
   }
 
+
+
+
+
+
+
   // If sat_score_25th parameter is provided, fetch all university info that fit the description
-  if (sat_score_25th) {
+  if (avg_sat) {
+    
+
+    const whereClause = {
+      avg_sat: {
+        [Op.lt]: parseInt(avg_sat, 10) + 100,
+      },
+  
+    
+    };
+  
+    if (popular_major) {
+      whereClause.popular_major = {[Op.iLike]: `%${popular_major.trim()}%`};
+    };
+    if (tuition_instate_full) {
+      whereClause.tuition_instate_full = {
+        [Op.lt]: parseInt(tuition_instate_full, 10) + 1000,
+      };
+    };
+  
+    if (tuition_outstate_full) {
+      whereClause.tuition_outstate_full = {
+        [Op.lt]: parseInt(tuition_outstate_full, 10) + 1000,
+      };
+    };
+    if(gpa_avg){
+      whereClause.gpa_avg ={[Op.lt]: parseFloat(gpa_avg, 10) + 0.10,
+      };
+    };
+
+
+
+
+
+
     const SATscore = await info.findAll({
       attributes: [
         "university_name",
@@ -61,11 +103,7 @@ router.get("/", async (req, res) => {
         "popular_major",
         "id",
       ],
-      where: {
-        sat_score_25th: {
-          [Op[selectedSatOperator]]: sat_score_25th,
-        },
-      },
+      where: whereClause,
     });
 
     if (!SATscore) {
@@ -74,8 +112,8 @@ router.get("/", async (req, res) => {
 
     return res.json(SATscore);
   }
-  // If act_score_25th parameter is provided, fetch all university info that fit the description
-  if (act_score_25th) {
+  // If act parameter is provided, fetch all university info that fit the description
+  if (avg_act) {
     const ACTscore = await info.findAll({
       attributes: [
         "university_name",
@@ -89,8 +127,8 @@ router.get("/", async (req, res) => {
         "id",
       ],
       where: {
-        act_score_25th: {
-          [Op[selectedSatOperator]]: act_score_25th,
+        avg_act: {
+          [Op.lt]: parseInt(avg_act, 10) + 1,
         },
       },
     });
