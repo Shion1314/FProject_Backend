@@ -43,6 +43,10 @@ const User = db.define(
       type: sequelize.STRING,
       allowNull: false,
     },
+    university: {
+      type: sequelize.ARRAY(sequelize.STRING),
+      allowNull: true,
+    },
   },
   {
     tableName: "user",

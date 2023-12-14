@@ -1,5 +1,6 @@
 const express = require("express");
 const z = require("zod");
+const sequelize = require("sequelize");
 
 const users = require("../Database/Model/User");
 const validateBody = require("../Middleware/validate-body");
@@ -146,4 +147,31 @@ router.post(
   }
 );
 
+router.put("/:id", async (req, res) => {
+  try {
+    
+    await users.update(
+      {
+        university: sequelize.literal(`array_append("university", '${req.body.university}')`),
+      },
+      {
+        where: {
+          id: req.params.id,
+        },
+      }
+    );
+
+    
+    const updatedUser = await users.findByPk(req.params.id);
+
+    res.status(201).json(updatedUser);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
 module.exports = router;
+
