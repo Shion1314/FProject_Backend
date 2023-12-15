@@ -20,6 +20,7 @@ router.get("/@me", (req, res) => {
       firstName: req.session.user.firstName,
       id: req.session.user.id,
       lastName: req.session.user.lastName,
+      university:req.session.user.university,
     },
   });
 });
@@ -75,7 +76,9 @@ router.post(
           firstName: user.firstName,
           id: user.id,
           lastName: user.lastName,
+          university:user.university,
         },
+        
       });
     });
   }
@@ -149,29 +152,31 @@ router.post(
 
 router.put("/:id", async (req, res) => {
   try {
-    
-    await users.update(
-      {
-        university: sequelize.literal(`array_append("university", '${req.body.university}')`),
-      },
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
-
-    
+    await users.update(req.body, { where: { id: req.params.id } });
     const updatedUser = await users.findByPk(req.params.id);
-
     res.status(201).json(updatedUser);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
+    // Handle errors
   }
 });
 
+router.get("/:id", async (req, res) => {
+  try {
+    // Fetch the user information
+    const user = await users.findByPk(req.params.id);
 
+    if (!user) {
+      // Return a 404 Not Found if the user is not found
+      return res.status(404).json({ error: "User not found" });
+    }
 
+    // Return the user information
+    res.status(200).json(user);
+
+  } catch (error) {
+    console.error("Error fetching user:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 module.exports = router;
 

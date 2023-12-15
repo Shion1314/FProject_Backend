@@ -44,7 +44,7 @@ const User = db.define(
       allowNull: false,
     },
     university: {
-      type: sequelize.ARRAY(sequelize.STRING),
+      type: sequelize.STRING,
       allowNull: true,
     },
   },
