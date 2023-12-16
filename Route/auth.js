@@ -1,19 +1,14 @@
 const express = require("express");
 const z = require("zod");
-const sequelize = require("sequelize");
 
 const users = require("../Database/Model/User");
+
+const requireSession = require("../Middleware/require-session");
 const validateBody = require("../Middleware/validate-body");
 
 const router = express.Router();
 
-router.get("/@me", (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({
-      message: "You are not logged in.",
-    });
-  }
-
+router.get("/@me", requireSession(), (req, res) => {
   res.json({
     user: {
       email: req.session.user.email,
@@ -26,6 +21,7 @@ router.get("/@me", (req, res) => {
 
 router.post(
   "/login",
+  requireSession(false),
   validateBody(
     z.object({
       email: z.string().email().min(1),
@@ -33,12 +29,6 @@ router.post(
     })
   ),
   async (req, res, next) => {
-    if (req.session.user) {
-      return res.status(403).json({
-        message: "You are already logged in.",
-      });
-    }
-
     const { email, password } = req.body;
 
     const user = await users.findOne({
@@ -81,13 +71,7 @@ router.post(
   }
 );
 
-router.post("/logout", (req, res) => {
-  if (!req.session.user) {
-    return res.status(401).json({
-      message: "You are not logged in.",
-    });
-  }
-
+router.post("/logout", requireSession(), (req, res) => {
   req.session.destroy((error) => {
     if (error) {
       return next(error);
@@ -99,6 +83,7 @@ router.post("/logout", (req, res) => {
 
 router.post(
   "/register",
+  requireSession(false),
   validateBody(
     z.object({
       firstName: z.string().min(1).max(255),
@@ -108,12 +93,6 @@ router.post(
     })
   ),
   async (req, res, next) => {
-    if (req.session.user) {
-      return res.status(403).json({
-        message: "You are already logged in.",
-      });
-    }
-
     const { firstName, lastName, email, password } = req.body;
 
     const existingUser = await users.findOne({
@@ -147,31 +126,4 @@ router.post(
   }
 );
 
-router.put("/:id", async (req, res) => {
-  try {
-    
-    await users.update(
-      {
-        university: sequelize.literal(`array_append("university", '${req.body.university}')`),
-      },
-      {
-        where: {
-          id: req.params.id,
-        },
-      }
-    );
-
-    
-    const updatedUser = await users.findByPk(req.params.id);
-
-    res.status(201).json(updatedUser);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-
-
 module.exports = router;
-
