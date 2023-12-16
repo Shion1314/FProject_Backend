@@ -14,6 +14,10 @@ module.exports = {
       allowNull: false,
       defaultValue: 1,
     });
+
+    await queryInterface.changeColumn("favorite_university", "rank", {
+      defaultValue: null,
+    });
   },
 
   async down(queryInterface, Sequelize) {

@@ -8,6 +8,10 @@ const User = require("./User");
 const FavoriteUniversity = db.define(
   "FavoriteUniversity",
   {
+    rank: {
+      type: sequelize.INTEGER,
+      allowNull: false,
+    },
     universityId: {
       type: sequelize.INTEGER,
       primaryKey: true,
