@@ -3,14 +3,13 @@ const z = require("zod");
 
 const Users = require("../Database/Model/User");
 
-const requireSession = require("../Middleware/require-session");
+const requireUser = require("../Middleware/require-user");
 const validateBody = require("../Middleware/validate-body");
 
 const router = express.Router();
 
 router.post(
   "/login",
-  requireSession(false),
   validateBody(
     z.object({
       email: z.string().email().min(1),
@@ -18,6 +17,12 @@ router.post(
     })
   ),
   async (req, res, next) => {
+    if (req.session.user) {
+      return res.status(403).json({
+        message: "You are already logged in.",
+      });
+    }
+
     const { email, password } = req.body;
 
     const user = await Users.findOne({
@@ -60,7 +65,7 @@ router.post(
   }
 );
 
-router.delete("/logout", requireSession(), (req, res) => {
+router.delete("/logout", requireUser(), (req, res) => {
   req.session.destroy((error) => {
     if (error) {
       return next(error);
@@ -72,7 +77,6 @@ router.delete("/logout", requireSession(), (req, res) => {
 
 router.post(
   "/register",
-  requireSession(false),
   validateBody(
     z.object({
       firstName: z.string().min(1).max(255),
@@ -82,6 +86,12 @@ router.post(
     })
   ),
   async (req, res, next) => {
+    if (req.session.user) {
+      return res.status(403).json({
+        message: "You are already logged in.",
+      });
+    }
+
     const { firstName, lastName, email, password } = req.body;
 
     const existingUser = await Users.findOne({
