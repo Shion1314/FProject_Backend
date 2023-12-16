@@ -6,20 +6,20 @@ const db = require("../Database/Connect");
 const FavoriteUniversity = require("../Database/Model/FavoriteUniversity");
 const Users = require("../Database/Model/User");
 
-const requireSession = require("../Middleware/require-session");
+const requireUser = require("../Middleware/require-user");
 const validateBody = require("../Middleware/validate-body");
 
 const router = express.Router();
 
-router.use(requireSession());
+router.use(requireUser());
 
 router.get("/", (req, res) => {
   res.json({
     user: {
-      email: req.session.user.email,
-      firstName: req.session.user.firstName,
-      id: req.session.user.id,
-      lastName: req.session.user.lastName,
+      email: req.user.email,
+      firstName: req.user.firstName,
+      id: req.user.id,
+      lastName: req.user.lastName,
     },
   });
 });
@@ -32,17 +32,7 @@ router.delete(
     })
   ),
   async (req, res) => {
-    const user = await Users.findOne({
-      where: {
-        id: req.session.user.id,
-      },
-    });
-
-    if (!user) {
-      throw new Error(`User with ID ${req.session.user.id} not found.`);
-    }
-
-    const isPasswordValid = await user.validatePassword(req.body.password);
+    const isPasswordValid = await req.user.validatePassword(req.body.password);
 
     if (!isPasswordValid) {
       return res.status(401).json({
@@ -54,7 +44,7 @@ router.delete(
       await FavoriteUniversity.destroy(
         {
           where: {
-            userId: req.session.user.id,
+            userId: req.user.id,
           },
         },
         {
@@ -65,7 +55,7 @@ router.delete(
       await Users.destroy(
         {
           where: {
-            id: req.session.user.id,
+            id: req.user.id,
           },
         },
         {
@@ -87,17 +77,9 @@ router.patch(
     })
   ),
   async (req, res) => {
-    const user = await Users.findOne({
-      where: {
-        id: req.session.user.id,
-      },
-    });
+    const { newPassword, oldPassword } = req.body;
 
-    if (!user) {
-      throw new Error(`User with ID ${req.session.user.id} not found.`);
-    }
-
-    const isPasswordValid = await user.validatePassword(req.body.oldPassword);
+    const isPasswordValid = await req.user.validatePassword(oldPassword);
 
     if (!isPasswordValid) {
       return res.status(401).json({
@@ -105,8 +87,8 @@ router.patch(
       });
     }
 
-    await user.update({
-      password: req.body.newPassword,
+    await req.user.update({
+      password: newPassword,
     });
 
     res.status(204).end();

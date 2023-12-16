@@ -4,18 +4,18 @@ const z = require("zod");
 const FavoriteUniversity = require("../Database/Model/FavoriteUniversity");
 const University = require("../Database/Model/University");
 
-const requireSession = require("../Middleware/require-session");
+const requireUser = require("../Middleware/require-user");
 const validateBody = require("../Middleware/validate-body");
 
 const router = express.Router();
 
-router.use(requireSession());
+router.use(requireUser());
 
 router.get("/", async (req, res) => {
   const favorites = await FavoriteUniversity.findAll({
     include: University,
     where: {
-      userId: req.session.user.id,
+      userId: req.user.id,
     },
   });
 
@@ -28,7 +28,7 @@ router.delete("/:id", async (req, res) => {
   const favorite = await FavoriteUniversity.findOne({
     where: {
       universityId: req.params.id,
-      userId: req.session.user.id,
+      userId: req.user.id,
     },
   });
 
@@ -55,7 +55,7 @@ router.post(
       include: University,
       where: {
         universityId: req.body.universityId,
-        userId: req.session.user.id,
+        userId: req.user.id,
       },
     });
 
@@ -67,7 +67,7 @@ router.post(
 
     await FavoriteUniversity.create({
       universityId: req.body.universityId,
-      userId: req.session.user.id,
+      userId: req.user.id,
     });
 
     res.status(204).end();
