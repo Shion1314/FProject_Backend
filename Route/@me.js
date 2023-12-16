@@ -112,3 +112,5 @@ router.patch(
     res.status(204).end();
   }
 );
+
+module.exports = router;
