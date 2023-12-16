@@ -1,23 +1,12 @@
 const express = require("express");
 const z = require("zod");
 
-const users = require("../Database/Model/User");
+const Users = require("../Database/Model/User");
 
 const requireSession = require("../Middleware/require-session");
 const validateBody = require("../Middleware/validate-body");
 
 const router = express.Router();
-
-router.get("/@me", requireSession(), (req, res) => {
-  res.json({
-    user: {
-      email: req.session.user.email,
-      firstName: req.session.user.firstName,
-      id: req.session.user.id,
-      lastName: req.session.user.lastName,
-    },
-  });
-});
 
 router.post(
   "/login",
@@ -31,7 +20,7 @@ router.post(
   async (req, res, next) => {
     const { email, password } = req.body;
 
-    const user = await users.findOne({
+    const user = await Users.findOne({
       where: {
         email,
       },
@@ -71,7 +60,7 @@ router.post(
   }
 );
 
-router.post("/logout", requireSession(), (req, res) => {
+router.delete("/logout", requireSession(), (req, res) => {
   req.session.destroy((error) => {
     if (error) {
       return next(error);
@@ -95,7 +84,7 @@ router.post(
   async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
 
-    const existingUser = await users.findOne({
+    const existingUser = await Users.findOne({
       where: {
         email,
       },
@@ -107,7 +96,7 @@ router.post(
       });
     }
 
-    const user = await users.create({
+    const user = await Users.create({
       firstName,
       lastName,
       email,
