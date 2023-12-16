@@ -30,6 +30,7 @@ app.use(
 );
 
 app.use("/auth", require("./Route/auth"));
+app.use("/@me", require("./Route/@me"));
 app.use("/favorites", require("./Route/favorites"));
 app.use("/university", require("./Route/university"));
 
