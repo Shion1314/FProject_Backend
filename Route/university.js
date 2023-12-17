@@ -56,19 +56,19 @@ router.get("/", async (req, res) => {
 
 
   // If sat_score_25th parameter is provided, fetch all university info that fit the description
-  if (avg_sat) {
-    
-
+  if(avg_sat || popular_major || tuition_instate_full || tuition_outstate_full || gpa_avg) {
     const whereClause = {
-      avg_sat: {
-        [Op.lt]: parseInt(avg_sat, 10) + 100,
-      },
-  
     
     };
+
+    if (avg_sat){
+      whereClause.avg_sat = {
+        [Op.lt]: parseInt(avg_sat, 10) + 100,
+      }
+    }
   
     if (popular_major) {
-      whereClause.popular_major = {[Op.iLike]: `%${popular_major.trim()}%`};
+      whereClause.popular_major = {[Op.iLike]: `%${popular_major}%`};
     };
     if (tuition_instate_full) {
       whereClause.tuition_instate_full = {
