@@ -21,3 +21,13 @@ https://github.com/Shion1314/FProject_Backend/blame/1bca2c60900c1228a0a133d4d6d9
 ## API Requirements
 
 ### Write routes to add new instances to each model
+
+### Write routes that returns all instances from each model
+
+### Write routes that return individual instances from each model based on their IDs
+
+### Write routes to update instances in each model
+
+### Write routes to remove instances form each model, based on their IDs
+
+### Write a route that returns one instance from a model, and all instances associated with it in a different model
