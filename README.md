@@ -32,6 +32,7 @@ https://github.com/Shion1314/FProject_Backend/blame/1bca2c60900c1228a0a133d4d6d9
 * CHECK IF THIS ONE IS CORRECT https://github.com/Shion1314/FProject_Backend/blame/9cb35503a8f35e119c0064debc7a5fa63c46c7d4/Route/%40me.js#L16-L25
 
 ### Write routes that return individual instances from each model based on their IDs
+* https://github.com/Shion1314/FProject_Backend/blame/9380034f2a7bf4612869cd575603ee1cfda56e37/Route/university.js#L9-L12
 
 ### Write routes to update instances in each model
 
