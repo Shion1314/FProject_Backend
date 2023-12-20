@@ -41,7 +41,7 @@ The University table is associated with FavoriteUniversity, and User is also ass
 
 ### Write routes to update instances in each model
 
-- [University Update Route (Not necessary, added for fun)](https://github.com/Shion1314/FProject_Backend/blame/3bcdbb78a03114295c27dafdc7fb9d1492c5e1f0/Route/university.js#L165-L168)
+- [University Update Route (Not necessary)](https://github.com/Shion1314/FProject_Backend/blame/3bcdbb78a03114295c27dafdc7fb9d1492c5e1f0/Route/university.js#L165-L168)
 
 ### Write routes to remove instances from each model, based on their IDs
 
