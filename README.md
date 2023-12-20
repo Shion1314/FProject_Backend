@@ -38,6 +38,8 @@ so for the backend req its says for each model "Write routes that return individ
 
 
 ### Write routes to update instances in each model
+* https://github.com/Shion1314/FProject_Backend/blame/3bcdbb78a03114295c27dafdc7fb9d1492c5e1f0/Route/university.js#L165-L168
+  This is for University table we wouldn't allow user to update so this is not necessary so we did it just for fun
 
 ### Write routes to remove instances form each model, based on their IDs
 
