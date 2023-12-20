@@ -27,6 +27,7 @@ https://github.com/Shion1314/FProject_Backend/blame/1bca2c60900c1228a0a133d4d6d9
 * https://github.com/Shion1314/FProject_Backend/blame/0898717aec2db2aa0ac5cdb0c9596ebdc5aa1248/Route/auth.js#L78-L126
   
 ### Write routes that returns all instances from each model
+* https://github.com/Shion1314/FProject_Backend/blame/c08eb4e07b14d187a003bf4c575b8a1d3c96c100/Route/university.js#L144-L163
 
 ### Write routes that return individual instances from each model based on their IDs
 
