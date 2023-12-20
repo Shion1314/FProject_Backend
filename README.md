@@ -14,3 +14,5 @@ https://github.com/Shion1314/FProject_Backend/blame/bc9b5776a66c3f24a27529c96ea2
 ### 2 or models should be associated with each other
 >
 The University table is associate with the FavoriteUniversity and user is also associate with FavoriteUniversity
+>
+https://github.com/Shion1314/FProject_Backend/blame/1bca2c60900c1228a0a133d4d6d933ceac8b44c0/Database/Model/FavoriteUniversity.js#L41-L49
