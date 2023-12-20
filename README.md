@@ -79,3 +79,7 @@ We don't have an explicit route for `DELETE /users/:id`, but we do have a [`DELE
 ### Write a route that returns one instance from a model, and all instances associated with it in a different model
 
 The route to [`retrieve all favorites for the current user`](https://github.com/Shion1314/FProject_Backend/blob/main/Route/favorites.js#L16) returns the associated university of each of their favorites.
+
+## Extra Credit
+
+Passwords are hashed using [hooks](https://github.com/Shion1314/FProject_Backend/blob/main/Database/Model/User.js#L56-L71) in the `User` model. This ensures the password is always hashed when updating the password property.
