@@ -37,7 +37,7 @@ The University table is associated with FavoriteUniversity, and User is also ass
 
 - [University Single Instance Route](https://github.com/Shion1314/FProject_Backend/blame/9380034f2a7bf4612869cd575603ee1cfda56e37/Route/university.js#L9-L12)
 
-( For ALEX: So, for the backend requirement, it says for each model "Write routes that return individual instances from each model based on their IDs," but I don't think we have one for FavoriteUniversity. Therefore, we have chosen not to include it and provided a reason or just not include it. And for user I think we use email but I think email its fine )
+( For ALEX: So, for the backend requirement, it says for each model "Write routes that return individual instances from each model based on their IDs," but I don't think we have one for FavoriteUniversity. Therefore, we have chosen not to include it and provided a reason or just not include it. And for user I think we use email but I think email its fine. Or maybe by each he just meant show each model that we did those. Cause he use the word each instead of "Every" )
 
 ### Write routes to update instances in each model
 
