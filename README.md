@@ -23,6 +23,8 @@ https://github.com/Shion1314/FProject_Backend/blame/1bca2c60900c1228a0a133d4d6d9
 ### Write routes to add new instances to each model
 >
 * https://github.com/Shion1314/FProject_Backend/blame/65e0d6ee8714af3d767f2356ebf98021513bc1e9/Route/university.js#L165-L168
+  This is for University table we wouldn't allow user to add university so this is not necessary
+>
 * https://github.com/Shion1314/FProject_Backend/blame/31de35e74306a8d4a39ba5e590fab3eafba2371e/Route/favorites.js#L30-L66
 * https://github.com/Shion1314/FProject_Backend/blame/0898717aec2db2aa0ac5cdb0c9596ebdc5aa1248/Route/auth.js#L78-L126
   
@@ -42,5 +44,7 @@ so for the backend req its says for each model "Write routes that return individ
   This is for University table we wouldn't allow user to update so this is not necessary so we did it just for fun
 
 ### Write routes to remove instances form each model, based on their IDs
+* https://github.com/Shion1314/FProject_Backend/blame/1343159512e1fa47ae829e74f63a8481bb9e52c9/Route/university.js#L170-L178
+Again this is not necessary for frontend
 
 ### Write a route that returns one instance from a model, and all instances associated with it in a different model
