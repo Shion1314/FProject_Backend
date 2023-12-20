@@ -29,7 +29,15 @@ The University table is associated with FavoriteUniversity, and User is also ass
 
 - [University All Route](https://github.com/Shion1314/FProject_Backend/blame/c08eb4e07b14d187a003bf4c575b8a1d3c96c100/Route/university.js#L144-L163)
 - [Favorites All Route](https://github.com/Shion1314/FProject_Backend/blame/1c06565335ca935d2ba199186a8c9232a8fe729a/Route/favorites.js#L16-L28). It only returns all favorites for the authenticated user, since it doesn't make sense to return favorites for other users too.
-- [User All Route (Check if correct)](https://github.com/Shion1314/FProject_Backend/blame/9cb35503a8f35e119c0064debc7a5fa63c46c7d4/Route/%40me.js#L16-L25)
+
+We don't have an endpoint that returns all users because that would be a security issue, but if we had to, it would look like:
+```javascript
+router.get("/", async (req, res) => {
+  const users = await Users.findAll();
+
+  res.json(users);
+});
+```
 
 ### Write routes that return individual instances from each model based on their IDs
 
